@@ -1,0 +1,19 @@
+{
+  "name": "safetriage-make",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Security-first AI intake agent for GitHub issues, built with Make and Gemini.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/prompt-contract.test.mjs"
+  },
+  "keywords": [
+    "ai-agent",
+    "github-issues",
+    "issue-triage",
+    "make-com",
+    "prompt-injection",
+    "devsecops",
+    "gemini"
+  ]
+}
