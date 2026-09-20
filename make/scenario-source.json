@@ -1,0 +1,60 @@
+{
+  "name": "SafeTriage — Secure GitHub Issue Intake",
+  "scheduling": {
+    "type": "indefinitely",
+    "interval": 900
+  },
+  "modules": [
+    {
+      "id": 1,
+      "module": "github:watchNewIssue",
+      "version": 4,
+      "root": "main",
+      "label": "Watch new SafeTriage issues",
+      "config": {
+        "parameters": {
+          "__IMTCONN__": 0,
+          "choose": "created",
+          "owner": "nobleCk",
+          "name": "safetriage-make",
+          "limit": 2
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "gemini-ai:simpleTextPrompt",
+      "version": 1,
+      "follows": 1,
+      "label": "Create security-first maintainer brief",
+      "config": {
+        "mapper": {
+          "model": "gemini-2.5-flash",
+          "prompt": "Copy the contents of prompts/triage-prompt.md here."
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "github:createAComment",
+      "version": 4,
+      "follows": 2,
+      "label": "Post advisory brief",
+      "config": {
+        "parameters": {
+          "__IMTCONN__": 0
+        },
+        "mapper": {
+          "select": "enterManually",
+          "subjectId": "{{1.id}}",
+          "body": "{{2.result}}"
+        }
+      }
+    }
+  ],
+  "notes": [
+    "Connection id 0 is an intentional placeholder. Select your GitHub connection in Make.",
+    "Resolve the polling cursor as From now on before activation.",
+    "The full security prompt is kept separately for review and testing."
+  ]
+}
